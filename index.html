@@ -57,8 +57,8 @@
 </div>
 
 <script>
-    // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI BAWAH INI
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtsYw4sqhEUrtXK3glBktnNxhiX-z87vHDfNJ70Jd-OUFAVhQOHsAnErwywq9Ntyilow/exec";
+    // MASUKKAN URL GOOGLE APPS SCRIPT YANG BARU DI BAWAH INI
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQtcYvP1j01FPj6xcf-8m1RotEIbNenlXr_X3fXnIeYjXurLnY4gq7f23yxnR5QRKEuQ/exec";
 
     document.getElementById('briefForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -69,20 +69,17 @@
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Mengirim data & email...";
         
-        const payload = {
-            klien: document.getElementById('klien').value,
-            layanan: document.getElementById('layanan').value,
-            detail: document.getElementById('detail').value,
-            picName: document.getElementById('picName').value,
-            picEmail: document.getElementById('picEmail').value
-        };
+        // JURUS ANTI CORS: Menggunakan URLSearchParams
+        const payload = new URLSearchParams();
+        payload.append("klien", document.getElementById('klien').value);
+        payload.append("layanan", document.getElementById('layanan').value);
+        payload.append("detail", document.getElementById('detail').value);
+        payload.append("picName", document.getElementById('picName').value);
+        payload.append("picEmail", document.getElementById('picEmail').value);
 
-       fetch(GOOGLE_SCRIPT_URL, {
+        fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(payload),
+            body: payload // Data dikirim sebagai form-urlencoded
         })
         .then(response => response.json())
         .then(data => {
@@ -96,8 +93,8 @@
         .catch(error => {
             statusMsg.style.display = "block";
             statusMsg.className = "alert alert-danger mt-3";
-            statusMsg.innerText = "Terjadi kesalahan koneksi.";
-            console.error('Error!', error.message);
+            statusMsg.innerText = "Gagal. Coba periksa apakah URL Google Script sudah diperbarui.";
+            console.error('Error:', error);
         })
         .finally(() => {
             btnSubmit.disabled = false;
@@ -105,6 +102,3 @@
         });
     });
 </script>
-
-</body>
-</html>
