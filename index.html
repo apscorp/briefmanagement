@@ -23,9 +23,9 @@
             </div>
             
             <div class="mb-3">
-                <label class="form-label">Layanan</label>
-                <select class="form-select" id="layanan" required>
-                    <option value="">-- Pilih Layanan --</option>
+                <label class="form-label">Services</label>
+                <select class="form-select" id="services" required>
+                    <option value="">-- Pilih Services --</option>
                     <option value="Influencer Marketing">Influencer Marketing</option>
                     <option value="Digital Performance">Digital Performance</option>
                     <option value="Affiliate">Affiliate</option>
@@ -70,7 +70,7 @@
         
         const payload = new URLSearchParams();
         payload.append("klien", document.getElementById('klien').value);
-        payload.append("layanan", document.getElementById('layanan').value);
+        payload.append("services", document.getElementById('services').value);
         payload.append("detail", document.getElementById('detail').value);
         payload.append("picName", document.getElementById('picName').value);
         payload.append("picEmail", document.getElementById('picEmail').value);
